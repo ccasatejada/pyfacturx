@@ -1,0 +1,28 @@
+# Mapping of different XML-flavors and levels.
+# Previously in main file.
+---
+factur-x:
+  xmp_schema: Factur-X_extension_schema.xmp
+  xmp_filename: factur-x.xml
+  levels:
+    minimum:
+      schema: FACTUR-X_BASIC-WL.xsd
+      xmp_str: MINIMUM
+      xml: minimum.xml
+    basicwl:
+      schema: FACTUR-X_BASIC-WL.xsd
+      xmp_str: BASIC WL
+      xml: basicwl.xml
+    basic:
+      schema: FACTUR-X_EN16931.xsd
+      xmp_str: BASIC
+      xml: basic.xml
+    en16931:
+      schema: FACTUR-X_EN16931.xsd
+      xmp_str: EN 16931
+      xml: en16931.xml
+  standards:
+    country: true
+    currency: true
+other-standard:
+  xmp_filename: something.xml
