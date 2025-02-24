@@ -10,7 +10,7 @@ setup(
     author_email='',
     url='',
     description='Factur-X: electronic invoicing standard for France',
-    long_description=open('README.rst').read(),
+    long_description=open('README.md').read(),
     license='BSD',
     classifiers=[
         'Development Status :: 4 - Beta',
