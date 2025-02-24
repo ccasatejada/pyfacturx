@@ -60,7 +60,7 @@ class FacturXPDFWriter(PdfWriter):
         file_entry.update({
             NameObject("/Type"): NameObject("/EmbeddedFile"),
             NameObject("/Params"): params_dict,
-            NameObject("/Subtype"): NameObject("/text#2Fxml"),
+            NameObject("/Subtype"): NameObject("/text/xml"),
         })
         file_entry_obj = self._add_object(file_entry)
         # The Filespec entry
@@ -142,7 +142,7 @@ def _get_metadata_timestamp():
     return meta_date
 
 def _base_info2pdf_metadata(base_info):
-    doc_type_name = u'Refund' if base_info['doc_type'] == '381' else u'Invoice'
+    doc_type_name = 'Refund' if base_info['doc_type'] == '381' else 'Invoice'
     date_to_format = datetime.today() if not base_info.get('date', None) else base_info.get('date')
     date_str = datetime.strftime(date_to_format, '%Y-%m-%d')
     title = f"{base_info['seller']}: {doc_type_name} {base_info['number']}"
@@ -210,7 +210,7 @@ def _prepare_pdf_metadata_xml(xmp_level_str, xmp_filename, facturx_ext_schema_ro
     desc_adobe = etree.SubElement(rdf, ns_rdf + 'Description', nsmap=nsmap_pdf)
     desc_adobe.set(ns_rdf + 'about', '')
     producer = etree.SubElement(desc_adobe, ns_pdf + 'Producer')
-    producer.text = 'PyPDF2'
+    producer.text = 'pypdf'
     desc_xmp = etree.SubElement(rdf, ns_rdf + 'Description', nsmap=nsmap_xmp)
     desc_xmp.set(ns_rdf + 'about', '')
     creator = etree.SubElement(desc_xmp, ns_xmp + 'CreatorTool')
@@ -229,8 +229,8 @@ def _prepare_pdf_metadata_xml(xmp_level_str, xmp_filename, facturx_ext_schema_ro
     facturx_desc.set(ns_fx + 'Version', '1.0')
 
     xml_str = etree.tostring(root, pretty_print=True, encoding="UTF-8", xml_declaration=False)
-    head = u'<?xpacket begin="\ufeff" id="W5M0MpCehiHzreSzNTczkc9d"?>'.encode('utf-8')
-    tail = u'<?xpacket end="w"?>'.encode('utf-8')
+    head = '<?xpacket begin="\ufeff" id="W5M0MpCehiHzreSzNTczkc9d"?>'.encode('utf-8')
+    tail = '<?xpacket end="w"?>'.encode('utf-8')
     xml_final_str = head + xml_str + tail
     logger.debug('metadata XML:')
     return xml_final_str
