@@ -1,5 +1,6 @@
 # pyfacturx
-=======================
+=======================  
+  
 Python lib to make Factur-X (AIFE's hybrid standard): PDF with embedded xml
   
   
@@ -15,8 +16,15 @@ Since there are multiple flavors of the embedded XML data, this library
 abstracts them into a Python ``dict``, which can be used to load and
 save from/to different flavors.
 
-This project was forked from `Akretion <https://github.com/akretion/factur-x>`_ and continues to be under the same license. We aim to make the library higher-level, make editing fields easier and support more standards and flavors.
-This project was forked from `invoice-x <https://github.com/invoice-x/factur-x-ng>`_ and continues to be under the same license. We aim only on factur-x standard, make it simplier and exhaustive around the different data profile provided by the standard, maintain the library etc.
+1)  
+This project was forked from `Akretion <https://github.com/akretion/factur-x>`_ and continues to be under the same license. We aim to make the library higher-level, make editing fields easier and support more standards and flavors.  
+2)  
+This project was forked from `invoice-x <https://github.com/invoice-x/factur-x-ng>`_ and continues to be under the same license. We aim only on factur-x standard, make it simplier and exhaustive around the different data profile provided by the standard
+3) 
+This project was forked from `cnfilms <https://github.com/cnfilms/factur-x-ng>`_ and continues to be under the same license. We aim on maintaining the library to be installable and usable >python3.9 and avoid use of deprecated lib (like pypdf2).
+
+ 
+  
 
 Main features:
 --------------
@@ -32,6 +40,15 @@ Installation
 ::
 
    pip install -r requirements.txt
+
+::
+
+Installation on your personal project
+------------
+
+::
+
+   pip install https://github.com/ccasatejada/pyfacturx/archive/main.zip
 
 ::
 
