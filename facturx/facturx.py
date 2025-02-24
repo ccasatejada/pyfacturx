@@ -14,11 +14,7 @@ from .flavors import xml_flavor
 from .logger import logger
 from .pdfwriter import FacturXPDFWriter
 
-# Python 2 and 3 compat
-try:
-    file_types = (file, io.IOBase)
-except NameError:
-    file_types = (io.IOBase,)
+file_types = (io.IOBase,)
 unicode = str
 
 __all__ = ['FacturX']

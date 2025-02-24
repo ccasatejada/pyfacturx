@@ -8,11 +8,8 @@ from pypdf.generic import DictionaryObject, DecodedStreamObject, NameObject, cre
 
 from .logger import logger
 
-# Python 2 and 3 compat
-try:
-    file_types = (file, io.IOBase)
-except NameError:
-    file_types = (io.IOBase,)
+
+file_types = (io.IOBase,)
 unicode = str
 
 class FacturXPDFWriter(PdfWriter):

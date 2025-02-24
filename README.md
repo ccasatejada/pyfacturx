@@ -61,11 +61,11 @@ Load PDF file without XML and assign some values to common fields.
    from facturx import FacturX
 
    inv = FacturX('some-file.pdf')
-   inv['due_date'] = datetime(2018, 10, 10)
-   inv['seller_name'] = 'Smith Ltd.'
+   inv['due_date'] = datetime(2018, 10, 10)  
+   inv['seller_name'] = 'Smith Ltd.'  
    inv['buyer_country'] = 'France'
 
-see fields mapping between xml and which key are available in facturx/flavors/fields.yml
+see fields mapping between xml and which keys are available in facturx/flavors/fields.yml
 
 Validate and save PDF including XML representation.
 
