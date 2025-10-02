@@ -8,6 +8,10 @@ __pycache__/
 
 # Distribution / packaging
 .Python
+.idea/
+lib64
+bin
+pyvenv.cfg
 build/
 develop-eggs/
 dist/
