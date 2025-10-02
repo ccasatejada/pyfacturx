@@ -55,7 +55,7 @@ class FacturXPDFWriter(PdfWriter):
         params_dict = DictionaryObject({
             NameObject('/CheckSum'): md5sum_obj,
             NameObject('/ModDate'): create_string_object(_get_pdf_timestamp()),
-            NameObject('/Size'): NameObject(str(len(facturx_xml_str))),
+            NameObject('/Size'): NumberObject(len(facturx_xml_str)),
         })
         file_entry = DecodedStreamObject()
         file_entry.set_data(facturx_xml_str)  # here we integrate the file itself
