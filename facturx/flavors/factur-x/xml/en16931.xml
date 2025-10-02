@@ -21,12 +21,12 @@
 	<rsm:SupplyChainTradeTransaction>
 		<ram:IncludedSupplyChainTradeLineItem>
 			<ram:AssociatedDocumentLineDocument>
-				<ram:LineID></ram:LineID>
+				<ram:LineID>1</ram:LineID>
 			</ram:AssociatedDocumentLineDocument>
 			<ram:SpecifiedTradeProduct>
 				<ram:SellerAssignedID></ram:SellerAssignedID>
 				<ram:BuyerAssignedID></ram:BuyerAssignedID>
-				<ram:Name></ram:Name>
+				<ram:Name>Facture</ram:Name>
 			</ram:SpecifiedTradeProduct>
 			<ram:SpecifiedLineTradeAgreement>
 				<ram:NetPriceProductTradePrice>
@@ -34,12 +34,12 @@
 				</ram:NetPriceProductTradePrice>
 			</ram:SpecifiedLineTradeAgreement>
 			<ram:SpecifiedLineTradeDelivery>
-				<ram:BilledQuantity unitCode="">0</ram:BilledQuantity>
+				<ram:BilledQuantity unitCode="C62">1</ram:BilledQuantity>
 			</ram:SpecifiedLineTradeDelivery>
 			<ram:SpecifiedLineTradeSettlement>
 				<ram:ApplicableTradeTax>
-					<ram:TypeCode></ram:TypeCode>
-					<ram:CategoryCode></ram:CategoryCode>
+					<ram:TypeCode>VAT</ram:TypeCode>
+					<ram:CategoryCode>S</ram:CategoryCode>
 					<ram:RateApplicablePercent>0</ram:RateApplicablePercent>
 				</ram:ApplicableTradeTax>
 				<ram:SpecifiedTradeSettlementLineMonetarySummation>
@@ -59,14 +59,15 @@
 				<ram:PostalTradeAddress>
 					<ram:PostcodeCode></ram:PostcodeCode>
 					<ram:LineOne></ram:LineOne>
+					<ram:LineTwo></ram:LineTwo>
 					<ram:CityName></ram:CityName>
 					<ram:CountryID></ram:CountryID>
 				</ram:PostalTradeAddress>
 				<ram:URIUniversalCommunication>
-					<ram:URIID schemeID=""></ram:URIID>
+					<ram:URIID schemeID="EM"></ram:URIID>
 				</ram:URIUniversalCommunication>
 				<ram:SpecifiedTaxRegistration>
-					<ram:ID schemeID=""></ram:ID>
+					<ram:ID schemeID="VA"></ram:ID>
 				</ram:SpecifiedTaxRegistration>
 			</ram:SellerTradeParty>
 			<ram:BuyerTradeParty>
@@ -78,11 +79,12 @@
 				<ram:PostalTradeAddress>
 					<ram:PostcodeCode></ram:PostcodeCode>
 					<ram:LineOne></ram:LineOne>
+					<ram:LineTwo></ram:LineTwo>
 					<ram:CityName></ram:CityName>
 					<ram:CountryID></ram:CountryID>
 				</ram:PostalTradeAddress>
 				<ram:SpecifiedTaxRegistration>
-					<ram:ID schemeID=""></ram:ID>
+					<ram:ID schemeID="VA"></ram:ID>
 				</ram:SpecifiedTaxRegistration>
 			</ram:BuyerTradeParty>
 			<ram:BuyerOrderReferencedDocument>
@@ -98,6 +100,7 @@
 				<ram:PostalTradeAddress>
 					<ram:PostcodeCode></ram:PostcodeCode>
 					<ram:LineOne></ram:LineOne>
+					<ram:LineTwo></ram:LineTwo>
 					<ram:CityName></ram:CityName>
 					<ram:CountryID></ram:CountryID>
 				</ram:PostalTradeAddress>
@@ -140,8 +143,8 @@
 				<ram:ActualAmount currencyID="EUR">0</ram:ActualAmount>
 				<ram:Reason></ram:Reason>
 				<ram:CategoryTradeTax>
-					<ram:TypeCode></ram:TypeCode>
-					<ram:CategoryCode></ram:CategoryCode>
+					<ram:TypeCode>VAT</ram:TypeCode>
+					<ram:CategoryCode>S</ram:CategoryCode>
 					<ram:DueDateTypeCode></ram:DueDateTypeCode>
 					<ram:RateApplicablePercent>0</ram:RateApplicablePercent>
 				</ram:CategoryTradeTax>
