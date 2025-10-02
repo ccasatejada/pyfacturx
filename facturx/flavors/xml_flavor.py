@@ -54,7 +54,8 @@ class XMLFlavor(object):
             FLAVORS[flavor]['levels'][level]['xml'])
         assert os.path.isfile(template_filename), 'Template for this flavor/level does not exist.'
         parser = etree.XMLParser(remove_blank_text=True)
-        xml_tree = etree.parse(open(template_filename), parser).getroot()
+        with open(template_filename) as f:
+            xml_tree = etree.parse(f, parser).getroot()
         return cls(xml_tree), xml_tree
 
     def get_level(self, facturx_xml_etree):
@@ -82,7 +83,8 @@ class XMLFlavor(object):
             os.path.dirname(__file__),
             self.name, 'xsd', xsd_filename)
 
-        xsd_etree_obj = etree.parse(open(xsd_file))
+        with open(xsd_file) as f:
+            xsd_etree_obj = etree.parse(f)
         official_schema = etree.XMLSchema(xsd_etree_obj)
         try:
             official_schema.assertValid(etree_to_validate)
@@ -104,7 +106,8 @@ class XMLFlavor(object):
             self.name,
             'xmp',
             FLAVORS[self.name]['xmp_schema'])
-        return etree.parse(open(xmp_file))
+        with open(xmp_file) as f:
+            return etree.parse(f)
 
     def get_xml_path(self, field_name):
         """Return XML path based on field_name and flavor"""

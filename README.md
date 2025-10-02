@@ -1,108 +1,231 @@
-# pyfacturx 
-  
-Python lib to make Factur-X (AIFE's hybrid standard): PDF with embedded xml
-  
-  
+# pyfacturx
 
-Factur-X Python library
-=======================
+Python library for creating and manipulating Factur-X compliant invoices - PDF documents with embedded XML metadata following the French/European electronic invoicing standard (FNFE).
 
-Factur-X is a EU standard for embedding XML representations of invoices
-in PDF files. This library provides an interface for reading, editing
-and saving the this metadata.
+## Overview
 
-Since there are multiple flavors of the embedded XML data, this library
-abstracts them into a Python ``dict``, which can be used to load and
-save from/to different flavors.
+**Factur-X** is a Franco-European e-invoicing standard that combines a human-readable PDF with structured XML data embedded in the same file. This hybrid format allows invoices to be:
+- Read and archived by humans (PDF layer)
+- Automatically processed by accounting software (XML layer)
+- Compliant with PDF/A-3 archiving standards
 
-1)  
-This project was forked from `Akretion <https://github.com/akretion/factur-x>`_ and continues to be under the same license. We aim to make the library higher-level, make editing fields easier and support more standards and flavors.  
-2)  
-This project was forked from `invoice-x <https://github.com/invoice-x/factur-x-ng>`_ and continues to be under the same license. We aim only on factur-x standard, make it simplier and exhaustive around the different data profile provided by the standard
-3)  
-This project was forked from `cnfilms <https://github.com/cnfilms/factur-x-ng>`_ and continues to be under the same license. We aim on maintaining the library to be installable and usable >python3.9 and avoid use of deprecated lib (like pypdf2).
+This library provides a simple Python interface for:
+- Reading and extracting Factur-X metadata from existing PDFs
+- Creating new Factur-X compliant invoices from regular PDFs
+- Editing invoice fields through a Python dictionary interface
+- Validating XML against official XSD schemas
+- Exporting metadata to various formats (XML, JSON, YAML)
 
- 
-  
+## Key Features
 
-Main features:
---------------
+- **Simple Dictionary-Style API** - Access invoice fields like `inv['seller_name']` or `inv['total_amount']`
+- **Multiple Conformance Levels** - Support for MINIMUM, BASIC, BASIC WL, and EN 16931 profiles
+- **PDF/A-3 Compliance** - Automatically embeds ICC color profiles and PDF/A-3 metadata
+- **XSD Validation** - Validate XML against official Factur-X schemas
+- **Format Conversion** - Export to XML, JSON, or YAML for data exchange
+- **Template System** - Create new invoices from XML templates
+- **Python 3.9+** - Modern codebase using current libraries (pypdf, lxml)
 
--  Edit and save existing XML metadata fields.
--  Create new XML representation from template and embed in PDF.
--  Add existing XML representation to PDF.
--  Validate existing XML representation.
+## Installation
 
-Installation
-------------
+### For Development
 
-::
+```bash
+git clone https://github.com/ccasatejada/pyfacturx.git
+cd pyfacturx
+pip install -r requirements.txt
+pip install -e .
+```
 
-   pip install -r requirements.txt
+### From GitHub
 
-::
+```bash
+pip install git+https://github.com/ccasatejada/pyfacturx.git@main
+```
 
-Installation on your personal project
-------------
+## Quick Start
 
-::
+### Creating a Factur-X Invoice
 
-   pip install https://github.com/ccasatejada/pyfacturx/archive/main.zip
+```python
+from facturx import FacturX
+from datetime import datetime
 
-::
+# Load a regular PDF (without embedded XML)
+inv = FacturX('invoice.pdf')
 
-Usage
------
+# Set invoice fields
+inv['invoice_number'] = 'INV-2025-001'
+inv['date'] = datetime(2025, 10, 2)
+inv['seller_name'] = 'My Company Ltd.'
+inv['buyer_name'] = 'Customer Inc.'
+inv['seller_country'] = 'FR'
+inv['buyer_country'] = 'DE'
+inv['currency'] = 'EUR'
 
-Load PDF file without XML and assign some values to common fields.
+# Validate and save
+if inv.is_valid():
+    inv.write_pdf('facturx-invoice.pdf')
+```
 
-::
+### Reading an Existing Factur-X Invoice
 
-   from facturx import FacturX
+```python
+from facturx import FacturX
 
-   inv = FacturX('some-file.pdf')
-   inv['due_date'] = datetime(2018, 10, 10)  
-   inv['seller_name'] = 'Smith Ltd.'  
-   inv['buyer_country'] = 'France'
+# Load a PDF with embedded Factur-X XML
+inv = FacturX('facturx-invoice.pdf')
 
-see fields mapping between xml and which keys are available in facturx/flavors/fields.yml
+# Access fields
+print(f"Invoice: {inv['invoice_number']}")
+print(f"Seller: {inv['seller_name']}")
+print(f"Amount: {inv['amount_total']} {inv['currency']}")
+print(f"Date: {inv['date']}")
 
-Validate and save PDF including XML representation.
+# Get all fields as dictionary
+data = inv.to_dict()
+```
 
-::
+### Exporting Metadata
 
-   inv.is_valid()
-   inv.write_pdf('my-file.pdf')
+```python
+from facturx import FacturX
 
-Load PDF *with* XML embedded. View and update fields via pivot dict.
+inv = FacturX('facturx-invoice.pdf')
 
-::
+# Export XML only
+inv.write_xml('metadata.xml')
 
-   inv = FacturX('another-file.pdf')
-   inv_dict = inv.as_dict()
-   inv_dict['currency'] = 'USD'
-   inv.update(inv_dict)
+# Export to JSON
+inv.write_json('metadata.json')
 
-Save XML metadata in separate file in different formats.
+# Export to YAML
+inv.write_yaml('metadata.yml')
+```
 
-::
+## Command Line Interface
 
-   inv.write_xml('metadata.xml')
-   inv.write_json('metadata.json')
-   inv.write_yaml('metadata.yml')
+After installing the package with `pip install -e .`, you can use the command line tool. If the `facturx` command is not found in your PATH, you can run it using Python:
 
-To have more examples, look at the source code of the command line tools
-located in the *bin* subdirectory.
+```bash
+# Using Python module (always works)
+python -m bin.cli <command> [options]
 
-Command line tools
-------------------
+# Or if installed and in PATH
+facturx <command> [options]
+```
 
-Several sub-commands are provided with this lib:
+### Available Commands
 
--  Dump embedded metadata:   ``facturx dump file-with-xml.pdf metadata.(xml|json|yml)``
--  Validate existing metadata: ``facturx validate file-with-xml.pdf``
--  Add external metadata file: ``facturx add no-xml.pdf metadata.xml``
--  Extract fields from PDF and embed: ``facturx extract no-xml.pdf``
+#### Dump embedded metadata to file
 
-All these command line tools have a **-h** option that explains how to
-use them and shows all the available options.
+```bash
+# Extract to XML
+python -m bin.cli dump invoice.pdf metadata.xml
+
+# Extract to JSON
+python -m bin.cli dump invoice.pdf metadata.json
+
+# Extract to YAML
+python -m bin.cli dump invoice.pdf metadata.yml
+```
+
+#### Validate embedded XML
+
+```bash
+python -m bin.cli validate invoice.pdf
+```
+
+### Help
+
+```bash
+# Show all available commands
+python -m bin.cli -h
+
+# Show help for specific command
+python -m bin.cli dump -h
+python -m bin.cli validate -h
+```
+
+## Available Fields
+
+The library provides a simplified interface to common invoice fields. Field names are mapped to XML paths internally. See `facturx/flavors/fields.yml` for the complete field mapping.
+
+**Common fields include:**
+- `invoice_number`, `date`, `date_due`
+- `seller_name`, `seller_country`, `seller_tva_intra`, `seller_siret`
+- `buyer_name`, `buyer_country`, `buyer_siret`
+- `currency`, `amount_untaxed`, `amount_tax`, `amount_total`
+- `type` (380=Invoice, 381=Credit Note)
+
+## Conformance Levels
+
+Factur-X defines several conformance levels with increasing requirements:
+
+- **MINIMUM** - Basic invoice identification and totals
+- **BASIC WL** - Basic with line items (without VAT breakdown)
+- **BASIC** - Basic with full line items
+- **EN 16931** - Full European standard compliance (recommended)
+
+Specify the level when creating new invoices:
+
+```python
+inv = FacturX('invoice.pdf', level='en16931')
+```
+
+## Testing
+
+The library includes comprehensive test coverage:
+
+```bash
+# Run all tests
+python -m unittest facturx.tests.test_facturx -v
+
+# Run specific test class
+python -m unittest facturx.tests.test_facturx.TestFieldAccess -v
+
+# Run single test
+python -m unittest facturx.tests.test_facturx.TestReading.test_write_pdf
+```
+
+## Requirements
+
+- Python 3.9 or higher
+- lxml 6.0.2
+- pypdf 6.1.1
+- pycountry 20.7.3
+- PyYAML 6.0.1
+
+See `requirements.txt` for exact versions.
+
+## Project History
+
+This project is a continuation of previous Factur-X libraries:
+
+1. Originally forked from [Akretion's factur-x](https://github.com/akretion/factur-x)
+2. Then forked from [invoice-x's factur-x-ng](https://github.com/invoice-x/factur-x-ng)
+3. Then forked from [cnfilms' factur-x-ng](https://github.com/cnfilms/factur-x-ng)
+
+Our goals:
+- Maintain compatibility with Python 3.9+
+- Use modern, maintained libraries (pypdf instead of deprecated PyPDF2)
+- Focus exclusively on Factur-X standard
+- Provide comprehensive test coverage
+- Simple, intuitive API
+
+## License
+
+BSD License (same as upstream projects)
+
+## Contributing
+
+Contributions are welcome! Please ensure:
+- All tests pass: `python -m unittest facturx.tests.test_facturx`
+- Code follows existing style conventions
+- New features include appropriate tests
+
+## Resources
+
+- [Factur-X Official Documentation (FNFE)](https://fnfe-mpe.org/factur-x/)
+- [EN 16931 European Standard](https://ec.europa.eu/digital-building-blocks/wikis/display/DIGITAL/Obtaining+a+copy+of+the+European+standard+on+eInvoicing)
+- [AIFE - Association Française des Entreprises privées](https://www.aife.fr/)

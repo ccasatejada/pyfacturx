@@ -137,10 +137,15 @@ def _base_info2pdf_metadata(base_info):
     doc_type_name = 'Refund' if base_info['doc_type'] == '381' else 'Invoice'
     date_to_format = datetime.today() if not base_info.get('date', None) else base_info.get('date')
     date_str = datetime.strftime(date_to_format, '%Y-%m-%d')
-    title = f"{base_info['seller']}: {doc_type_name} {base_info['number']}"
-    subject = f"Factur-X {doc_type_name} {base_info['number']} dated {date_str} issued by {base_info['seller']}"
+
+    # Handle None values
+    seller = base_info['seller'] or ''
+    number = base_info['number'] or ''
+
+    title = f"{seller}: {doc_type_name} {number}".strip(': ')
+    subject = f"Factur-X {doc_type_name} {number} dated {date_str} issued by {seller}".strip()
     pdf_metadata = {
-        'author': base_info['seller'],
+        'author': seller,
         'keywords': f"{doc_type_name}, Factur-X",
         'title': title,
         'subject': subject,
