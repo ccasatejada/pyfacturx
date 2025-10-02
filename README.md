@@ -217,12 +217,6 @@ Our goals:
 
 BSD License (same as upstream projects)
 
-## Contributing
-
-Contributions are welcome! Please ensure:
-- All tests pass: `python -m unittest facturx.tests.test_facturx`
-- Code follows existing style conventions
-- New features include appropriate tests
 
 ## Resources
 
