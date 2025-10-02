@@ -1,10 +1,12 @@
 import hashlib
 import io
+import os
 from datetime import datetime
 
 from lxml import etree
 from pypdf import PdfWriter, PdfReader
-from pypdf.generic import DictionaryObject, DecodedStreamObject, NameObject, create_string_object, ArrayObject
+from pypdf.generic import (DictionaryObject, NumberObject, NameObject, create_string_object, ArrayObject,
+                           DecodedStreamObject)
 
 from .logger import logger
 
@@ -48,7 +50,7 @@ class FacturXPDFWriter(PdfWriter):
     def _update_metadata_add_attachment(self, pdf_metadata, output_intents):
         # The entry for the file
         facturx_xml_str = self.factx.xml_str
-        md5sum = hashlib.md5().hexdigest()
+        md5sum = hashlib.md5(facturx_xml_str).hexdigest()
         md5sum_obj = create_string_object(md5sum)
         params_dict = DictionaryObject({
             NameObject('/CheckSum'): md5sum_obj,
@@ -80,37 +82,31 @@ class FacturXPDFWriter(PdfWriter):
             NameObject("/UF"): fname_obj,
         })
         filespec_obj = self._add_object(filespec_dict)
-        name_arrayobj_cdict = {fname_obj: filespec_obj}
 
-        logger.debug('name_arrayobj_cdict=%s', name_arrayobj_cdict)
-        name_arrayobj_content_sort = list(
-            sorted(name_arrayobj_cdict.items(), key=lambda x: x[0]))
-        logger.debug('name_arrayobj_content_sort=%s', name_arrayobj_content_sort)
-        name_arrayobj_content_final = []
-        af_list = []
-        for (fname_obj, filespec_obj) in name_arrayobj_content_sort:
-            name_arrayobj_content_final += [fname_obj, filespec_obj]
-            af_list.append(filespec_obj)
+        # Create embedded files dictionary
         embedded_files_names_dict = DictionaryObject({
-            NameObject("/Names"): ArrayObject(name_arrayobj_content_final),
+            NameObject("/Names"): ArrayObject([fname_obj, filespec_obj]),
         })
-
-        # Then create the entry for the root, as it needs a
-        # reference to the Filespec
         embedded_files_dict = DictionaryObject({
             NameObject("/EmbeddedFiles"): embedded_files_names_dict,
         })
+
+        # Handle OutputIntents
         res_output_intents = []
-        logger.debug('output_intents=%s', output_intents)
         for output_intent_dict, dest_output_profile_dict in output_intents:
             dest_output_profile_obj = self._add_object(dest_output_profile_dict)
-            output_intent_dict.update({
-                NameObject("/DestOutputProfile"): dest_output_profile_obj,
-            })
+            output_intent_dict.update({NameObject("/DestOutputProfile"): dest_output_profile_obj})
             output_intent_obj = self._add_object(output_intent_dict)
             res_output_intents.append(output_intent_obj)
 
-        # Update the root
+        if not res_output_intents:
+            logger.info("No OutputIntent found, embedding sRGB ICC profile")
+            icc_path = "/usr/share/color/icc/colord/sRGB.icc"
+            icc_bytes = _read_icc_profile(icc_path)
+            output_intent_obj = _create_output_intent(self, icc_bytes)
+            res_output_intents.append(output_intent_obj)
+
+        # Embed metadata XML
         xmp_level_str = self.factx.flavor.details['levels'][self.factx.flavor.level]['xmp_str']
         xmp_template = self.factx.flavor.get_xmp_xml()
         metadata_xml_str = _prepare_pdf_metadata_xml(xmp_level_str, xmp_filename, xmp_template, pdf_metadata)
@@ -121,18 +117,14 @@ class FacturXPDFWriter(PdfWriter):
             NameObject('/Type'): NameObject('/Metadata'),
         })
         metadata_obj = self._add_object(metadata_file_entry)
-        af_value_obj = self._add_object(ArrayObject(af_list))
+        af_value_obj = self._add_object(ArrayObject([filespec_obj]))
         self._root_object.update({
             NameObject("/AF"): af_value_obj,
             NameObject("/Metadata"): metadata_obj,
             NameObject("/Names"): embedded_files_dict,
             NameObject("/PageMode"): NameObject("/UseAttachments"),
+            NameObject("/OutputIntents"): ArrayObject(res_output_intents),
         })
-        logger.debug('res_output_intents=%s', res_output_intents)
-        if res_output_intents:
-            self._root_object.update({
-                NameObject("/OutputIntents"): ArrayObject(res_output_intents),
-            })
         metadata_txt_dict = _prepare_pdf_metadata_txt(pdf_metadata)
         self.add_metadata(metadata_txt_dict)
 
@@ -255,3 +247,26 @@ def _get_pdf_timestamp(date=None):
         date = datetime.now()
     pdf_date = date.strftime("D:%Y%m%d%H%M%S+00'00'")
     return pdf_date
+
+def _read_icc_profile(icc_path):
+    with open(icc_path, "rb") as f:
+        return f.read()
+
+def _create_output_intent(self, icc_bytes, output_condition="sRGB IEC61966-2.1"):
+    # Create the ICC profile stream
+    icc_stream = DecodedStreamObject()
+    icc_stream.set_data(icc_bytes)
+    icc_stream.update({
+        NameObject("/N"): NumberObject(3),  # 3 components for RGB
+    })
+    icc_obj = self._add_object(icc_stream)
+
+    # Build OutputIntent dictionary
+    output_intent_dict = DictionaryObject({
+        NameObject("/Type"): NameObject("/OutputIntent"),
+        NameObject("/S"): NameObject("/GTS_PDFA1"),  # For PDF/A-3, GTS_PDFA1 is valid
+        NameObject("/OutputConditionIdentifier"): create_string_object(output_condition),
+        NameObject("/Info"): create_string_object(output_condition),
+        NameObject("/DestOutputProfile"): icc_obj,
+    })
+    return self._add_object(output_intent_dict)
