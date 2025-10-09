@@ -1,7 +1,7 @@
 <rsm:CrossIndustryInvoice xmlns:qdt="urn:un:unece:uncefact:data:standard:QualifiedDataType:100" xmlns:ram="urn:un:unece:uncefact:data:standard:ReusableAggregateBusinessInformationEntity:100" xmlns:rsm="urn:un:unece:uncefact:data:standard:CrossIndustryInvoice:100" xmlns:udt="urn:un:unece:uncefact:data:standard:UnqualifiedDataType:100" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:un:unece:uncefact:data:standard:CrossIndustryInvoice:100 file://Mac/Home/Documents/Cyrille%20Boulot/ADMAREL%202017/_FNFE%202017/_GT%20Facture%20Mixte/_Factur-X%20V1/D16B%20SCRDM%20(Subset)%20CII/D16B%20SCRDM%20(Subset)%20CII%20uncoupled/uncoupled%20clm/CII/uncefact/data/standard/CrossIndustryInvoice_100pD16B.xsd">
 	<rsm:ExchangedDocumentContext>
 		<ram:BusinessProcessSpecifiedDocumentContextParameter>
-			<ram:ID></ram:ID>
+			<ram:ID>A1</ram:ID>
 		</ram:BusinessProcessSpecifiedDocumentContextParameter>
 		<ram:GuidelineSpecifiedDocumentContextParameter>
 			<ram:ID>urn:cen.eu:en16931:2017</ram:ID>
@@ -54,7 +54,7 @@
 				<ram:GlobalID schemeID=""></ram:GlobalID>
 				<ram:Name></ram:Name>
 				<ram:SpecifiedLegalOrganization>
-					<ram:ID schemeID=""></ram:ID>
+					<ram:ID schemeID="0002"></ram:ID>
 				</ram:SpecifiedLegalOrganization>
 				<ram:PostalTradeAddress>
 					<ram:PostcodeCode></ram:PostcodeCode>
@@ -74,7 +74,7 @@
 				<ram:ID schemeID=""></ram:ID>
 				<ram:Name></ram:Name>
 				<ram:SpecifiedLegalOrganization>
-					<ram:ID schemeID=""></ram:ID>
+					<ram:ID schemeID="0002"></ram:ID>
 				</ram:SpecifiedLegalOrganization>
 				<ram:PostalTradeAddress>
 					<ram:PostcodeCode></ram:PostcodeCode>
