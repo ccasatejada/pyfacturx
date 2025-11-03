@@ -21,6 +21,10 @@ factur-x:
       schema: FACTUR-X_EN16931.xsd
       xmp_str: EN 16931
       xml: en16931.xml
+    en16931_fe:
+      schema: FACTUR-X_EN16931-FE.xsd
+      xmp_str: EN 16931
+      xml: en16931_fe.xml
   standards:
     country: true
     currency: true

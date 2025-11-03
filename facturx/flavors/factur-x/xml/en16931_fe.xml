@@ -1,7 +1,7 @@
 <rsm:CrossIndustryInvoice xmlns:qdt="urn:un:unece:uncefact:data:standard:QualifiedDataType:100" xmlns:ram="urn:un:unece:uncefact:data:standard:ReusableAggregateBusinessInformationEntity:100" xmlns:rsm="urn:un:unece:uncefact:data:standard:CrossIndustryInvoice:100" xmlns:udt="urn:un:unece:uncefact:data:standard:UnqualifiedDataType:100" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:un:unece:uncefact:data:standard:CrossIndustryInvoice:100 file://Mac/Home/Documents/Cyrille%20Boulot/ADMAREL%202017/_FNFE%202017/_GT%20Facture%20Mixte/_Factur-X%20V1/D16B%20SCRDM%20(Subset)%20CII/D16B%20SCRDM%20(Subset)%20CII%20uncoupled/uncoupled%20clm/CII/uncefact/data/standard/CrossIndustryInvoice_100pD16B.xsd">
 	<rsm:ExchangedDocumentContext>
 		<ram:BusinessProcessSpecifiedDocumentContextParameter>
-			<ram:ID>A1</ram:ID>
+			<ram:ID>B1</ram:ID>
 		</ram:BusinessProcessSpecifiedDocumentContextParameter>
 		<ram:GuidelineSpecifiedDocumentContextParameter>
 			<ram:ID>urn:cen.eu:en16931:2017</ram:ID>
@@ -51,7 +51,7 @@
 			<ram:BuyerReference></ram:BuyerReference>
 			<ram:SellerTradeParty>
 				<ram:ID schemeID=""></ram:ID>
-				<ram:GlobalID schemeID=""></ram:GlobalID>
+				<ram:GlobalID schemeID="0009"></ram:GlobalID>
 				<ram:Name></ram:Name>
 				<ram:SpecifiedLegalOrganization>
 					<ram:ID schemeID="0002"></ram:ID>
@@ -134,6 +134,14 @@
 				<ram:DueDateTypeCode></ram:DueDateTypeCode>
 				<ram:RateApplicablePercent>0</ram:RateApplicablePercent>
 			</ram:ApplicableTradeTax>
+			<ram:BillingSpecifiedPeriod>
+				<ram:StartDateTime>
+				  <udt:DateTimeString format="102"></udt:DateTimeString>
+				</ram:StartDateTime>
+				<ram:EndDateTime>
+				  <udt:DateTimeString format="102"></udt:DateTimeString>
+				</ram:EndDateTime>
+		    </ram:BillingSpecifiedPeriod>
 			<ram:SpecifiedTradeAllowanceCharge>
 				<ram:ChargeIndicator>
 					<udt:Indicator>false</udt:Indicator>
