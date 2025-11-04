@@ -36,7 +36,7 @@ class FacturX(object):
 
     def __init__(self, pdf_invoice, flavor='factur-x', level='minimum'):
         # Read PDF from path, pointer or string
-        if isinstance(pdf_invoice, str) and pdf_invoice.endswith('.pdf') and os.path.isfile(pdf_invoice):
+        if isinstance(pdf_invoice, str) and os.path.isfile(pdf_invoice):
             with open(pdf_invoice, 'rb') as f:
                 pdf_file = BytesIO(f.read())
         elif isinstance(pdf_invoice, file_types):
