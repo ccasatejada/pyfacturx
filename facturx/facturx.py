@@ -126,11 +126,8 @@ class FacturX(object):
 
     def _save_to_registry(self, current_el, parent_tag):
         if parent_tag not in self.already_added_field:
-            self.already_added_field[parent_tag] = []
-        elif current_el in self.already_added_field[parent_tag]:
-            self.already_added_field[parent_tag] = [el for el in self.already_added_field[parent_tag] if
-                                                    el != current_el]
-        else:
+            self.already_added_field[parent_tag] = [current_el]
+        elif current_el not in self.already_added_field[parent_tag]:
             self.already_added_field[parent_tag].append(current_el)
 
     def is_valid(self):

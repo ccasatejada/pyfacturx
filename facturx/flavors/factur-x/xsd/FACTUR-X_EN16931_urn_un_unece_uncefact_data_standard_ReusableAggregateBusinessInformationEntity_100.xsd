@@ -111,7 +111,7 @@
       <xs:element name="ApplicableTradeTax" type="ram:TradeTaxType" minOccurs="0" maxOccurs="unbounded"/>
       <xs:element name="BillingSpecifiedPeriod" type="ram:SpecifiedPeriodType" minOccurs="0"/>
       <xs:element name="SpecifiedTradeAllowanceCharge" type="ram:TradeAllowanceChargeType" minOccurs="0" maxOccurs="unbounded"/>
-      <xs:element name="SpecifiedTradeSettlementLineMonetarySummation" type="ram:TradeSettlementLineMonetarySummationType" minOccurs="0"/>
+      <xs:element name="SpecifiedTradeSettlementLineMonetarySummation" type="ram:TradeSettlementLineMonetarySummationType" minOccurs="0" maxOccurs="unbounded"/>
       <xs:element name="AdditionalReferencedDocument" type="ram:ReferencedDocumentType" minOccurs="0" maxOccurs="unbounded"/>
       <xs:element name="ReceivableSpecifiedTradeAccountingAccount" type="ram:TradeAccountingAccountType" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
@@ -166,9 +166,9 @@
     <xs:sequence>
       <xs:element name="AssociatedDocumentLineDocument" type="ram:DocumentLineDocumentType"/>
       <xs:element name="SpecifiedTradeProduct" type="ram:TradeProductType" minOccurs="0"/>
-      <xs:element name="SpecifiedLineTradeAgreement" type="ram:LineTradeAgreementType" minOccurs="0"/>
-      <xs:element name="SpecifiedLineTradeDelivery" type="ram:LineTradeDeliveryType" minOccurs="0"/>
-      <xs:element name="SpecifiedLineTradeSettlement" type="ram:LineTradeSettlementType"/>
+      <xs:element name="SpecifiedLineTradeAgreement" type="ram:LineTradeAgreementType" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="SpecifiedLineTradeDelivery" type="ram:LineTradeDeliveryType" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="SpecifiedLineTradeSettlement" type="ram:LineTradeSettlementType" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="SupplyChainTradeTransactionType">

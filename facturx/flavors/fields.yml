@@ -226,3 +226,9 @@ billing_date_start:
 billing_date_end:
     _path:
         factur-x: //rsm:SupplyChainTradeTransaction/ram:ApplicableHeaderTradeSettlement/ram:BillingSpecifiedPeriod/ram:EndDateTime/udt:DateTimeString
+supply_chain_trade_line_item:
+    _path:
+        factur-x: //rsm:SupplyChainTradeTransaction/ram:IncludedSupplyChainTradeLineItem/ram:AssociatedDocumentLineDocument
+line_id:
+    _path:
+        factur-x: //rsm:SupplyChainTradeTransaction/ram:IncludedSupplyChainTradeLineItem/ram:AssociatedDocumentLineDocument/ram:LineID
