@@ -100,7 +100,7 @@ class FacturXPDFWriter(PdfWriter):
             res_output_intents.append(output_intent_obj)
 
         if not res_output_intents:
-            logger.info("No OutputIntent found, embedding sRGB ICC profile")
+            # logger.info("No OutputIntent found, embedding sRGB ICC profile")
             icc_path = "/usr/share/color/icc/colord/sRGB.icc"
             icc_bytes = _read_icc_profile(icc_path)
             output_intent_obj = _create_output_intent(self, icc_bytes)
