@@ -97,7 +97,7 @@ class FacturX(object):
         res = self.xml.xpath(path, namespaces=self._namespaces)
         if not res:
             # The node is not defined at all in the parsed xml
-            logger.warning("{} is not defined in {}".format(path, self.flavor.name))
+            # logger.warning("{} is not defined in {}".format(path, self.flavor.name))
             return
 
         current_el = res[-1]
