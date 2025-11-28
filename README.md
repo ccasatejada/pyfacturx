@@ -28,21 +28,6 @@ This library provides a simple Python interface for:
 
 ## Installation
 
-### For Development
-
-```bash
-git clone https://github.com/ccasatejada/pyfacturx.git
-cd pyfacturx
-pip install -r requirements.txt
-pip install -e .
-```
-
-### From GitHub
-
-```bash
-pip install git+https://github.com/ccasatejada/pyfacturx.git@main
-```
-
 ## Quick Start
 
 ### Creating a Factur-X Invoice
