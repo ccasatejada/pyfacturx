@@ -1,14 +1,15 @@
+import copy
 import io
 import json
 import os
-import copy
 from datetime import datetime
 from io import BytesIO
 
 import yaml
+from .constants import EN16931
+from lxml import etree
 from pypdf import PdfReader
 from pypdf.generic import IndirectObject
-from lxml import etree
 
 from .flavors import xml_flavor
 from .logger import logger
@@ -121,6 +122,10 @@ class FacturX(object):
             value = value.strftime('%Y%m%d')
             current_el.attrib['format'] = '102'
             current_el.text = value
+        # if en16931 temporary, will eventually be removed once sure its applicable to basicwl too
+        elif self.flavor.level == EN16931 and field_name == 'seller_email' and ':' in value:
+            current_el.text = str(value.split(':')[1])
+            current_el.attrib['schemeID'] = str(value.split(':')[0])
         else:
             current_el.text = str(value)
 
