@@ -169,7 +169,7 @@ seller_city_name:
     _required: false
 buyer_siret:
     _path:
-        factur-x: //rsm:SupplyChainTradeTransaction/ram:ApplicableHeaderTradeAgreement/ram:BuyerTradeParty/ram:ID
+        factur-x: //rsm:SupplyChainTradeTransaction/ram:ApplicableHeaderTradeAgreement/ram:BuyerTradeParty/ram:GlobalID
     _required: true
 buyer_specified_siret:
     _path:

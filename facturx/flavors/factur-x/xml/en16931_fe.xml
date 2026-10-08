@@ -80,7 +80,7 @@
 				</ram:SpecifiedTaxRegistration>
 			</ram:SellerTradeParty>
 			<ram:BuyerTradeParty>
-				<ram:ID schemeID="0009"></ram:ID>
+				<ram:GlobalID schemeID="0009"></ram:GlobalID>
 				<ram:Name></ram:Name>
 				<ram:SpecifiedLegalOrganization>
 					<ram:ID schemeID="0002"></ram:ID>
